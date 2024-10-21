@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Oct 21 12:37:30 2024
+
+@author: Lenovo
+"""
+
 import cv2
 import numpy as np
 
@@ -23,21 +30,24 @@ def on_mouse(event,x,y,flag,param):
     S = p_sel[1]
     V = p_sel[2]
 
-
+img = cv2.imread("C:/Users/Lenovo/Pictures/anggur.jpeg", 250)
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 cv2.namedWindow("camera", 1)
 cv2.namedWindow("camera2", 2)
 cv2.namedWindow("camera3", 3)
 #cam = video.create_capture(0)
-cam = cv2.VideoCapture(0)
-cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+#cam = cv2.VideoCapture(0)
+#cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+#cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+cv2.setMouseCallback("camera2", on_mouse, 0)
 
 while True:
-    ret, src = cam.read()
-    src = cv2.blur(src, (3,3))
-    hsv = cv2.cvtColor(src, cv2.COLOR_BGR2HSV)
-    cv2.setMouseCallback("camera2",on_mouse, 0);
+    #ret, src = cam.read()
+    #src = cv2.blur(src, (3,3))
+    #hsv = cv2.cvtColor(src, cv2.COLOR_BGR2HSV)
+    #cv2.setMouseCallback("camera2",on_mouse, 0);
 
+    src = cv2.blur (img, (3,3))
     min_color = np.array([H-thr_H,S-thr_S,V-thr_V])
     max_color = np.array([H+thr_H,S+thr_S,V+thr_V])
     mask = cv2.inRange(hsv, min_color, max_color)
